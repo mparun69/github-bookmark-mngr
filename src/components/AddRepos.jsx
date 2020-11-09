@@ -25,6 +25,7 @@ const AddRepos = () => {
     e.preventDefault();
     setSubmitFlag(!submitFlag);
     setSearchQuery(query);
+    
   };
 
   return (
@@ -68,7 +69,7 @@ const AddRepos = () => {
         <Search
           user={userFlag}
           repo={repoFlag}
-          query={searchQuery}
+          query={searchQuery.replace(/ /g, '')}
           flag={submitFlag}
         />
       </div>

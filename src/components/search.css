@@ -54,7 +54,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 5px;
+    padding: 2px;
 }
 
 .paginate-button{
@@ -80,7 +80,7 @@
 .repo-container{
     border: solid #222222 8px;
     border-radius: 30px;
-    padding: 5px;
+    padding: 2px;
     width: 95%;
 }
 

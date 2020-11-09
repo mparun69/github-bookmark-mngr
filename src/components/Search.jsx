@@ -10,6 +10,7 @@ const Search = (props) => {
   const [reposPerPage] = useState(5);
   const [isLoading, setIsLoading] = useState(false);
   const [repos, setRepos] = useState([]);
+  const [fetchStat, setFetchStat] = useState(false);
 
   const query = props.query;
 
@@ -20,23 +21,25 @@ const Search = (props) => {
       );
     } else {
       try {
-        if (props.user === true && isLoading === false) {
+        if (props.user === true && isLoading === false && query!=="") {
           setIsLoading(true);
           userQueryFetch();
           setTimeout(() => {
             setIsLoading(false);
           }, 2000);
+          setFetchStat(true);
         }
       } catch (error) {
         return <h1>{error}</h1>;
       }
       try {
-        if (props.repo === true && isLoading === false) {
+        if (props.repo === true && isLoading === false && query!=="") {
           setIsLoading(true);
           repoQueryFetch();
           setTimeout(() => {
             setIsLoading(false);
           }, 2000);
+          setFetchStat(true);
         }
       } catch (error) {
         return <h1>{error}</h1>;
@@ -47,8 +50,7 @@ const Search = (props) => {
   const userQueryFetch = async () => {
     let data = await fetch(`https://api.github.com/users/${query}/repos`);
     const user = await data.json();
-
-    setRepos(user);
+    user.message? setRepos([]): setRepos(user);
   };
 
   const repoQueryFetch = async () => {
@@ -56,7 +58,7 @@ const Search = (props) => {
       `https://api.github.com/search/repositories?q=${query}`
     );
     const repo = await data.json();
-
+    console.log(repo);
     setRepos((user) => [...user, ...repo.items]);
   };
 
@@ -70,13 +72,15 @@ const Search = (props) => {
 
   return (
     <div>
-      <RenderRepo repos={currentRepos} loading={isLoading} />
+      <RenderRepo repos={currentRepos} loading={isLoading} stat={fetchStat}/>
       <Pagination
         reposPerPage={reposPerPage}
         totalRepos={repos.length}
         paginate={paginate}
+
         className="paginate-button"
       />
+
     </div>
   );
 };

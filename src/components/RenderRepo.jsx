@@ -5,6 +5,7 @@ import { Button, Modal } from "react-bootstrap";
 
 const RenderRepo = (props) => {
   const [isNull, setIsNull] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("Nothing here yet! Search to see more...");
   const [showAlert, setShowAlert] = useState(false);
   const [addedRepos, setAddedRepos] = useState(() => {
     const localData = localStorage.getItem("localrepos");
@@ -32,8 +33,15 @@ const RenderRepo = (props) => {
   };
 
   useEffect(() => {
+
     if (props.repos.length !== 0) {
       setIsNull(true);
+    }
+    if(props.stat===true){
+      setErrorMessage("Sorry, Your search did not match any documents!")
+    }else{
+
+      setErrorMessage("Nothing here yet! Search to see more...")
     }
   }, [props.repos]);
 
@@ -48,9 +56,9 @@ const RenderRepo = (props) => {
           props.repos.map((repo) => (
             <div key={repo.id} className="repo-container">
               <a href={repo.html_url}>
-                <h3>{repo.name}</h3>
+                <h4>{repo.name}</h4>
               </a>
-              <p>{repo.description ? repo.description.slice(0, 80) : ""}</p>
+              <p>{repo.description ? repo.description.slice(0, 80) : ""}{" "}<i>~owner:{" "}{repo.owner.login}</i></p>
               <Button
                 onClick={() =>
                   addRepoToLocal(
@@ -64,13 +72,10 @@ const RenderRepo = (props) => {
               >
                 Add
               </Button>
+
             </div>
           ))
-        ) : (
-          <h1 className="not-found-error">
-            Nothing here yet! Search to see more...
-          </h1>
-        )}
+              ) : (<h1 className="not-found-error">{errorMessage}</h1>)}
         <Modal
           show={showAlert}
           onHide={handleClose}
