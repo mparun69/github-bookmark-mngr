@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# GitHub Bookmark Manager
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a simple GitHub Repository bookmark manager created with react.js.
 
 ## Available Scripts
 
