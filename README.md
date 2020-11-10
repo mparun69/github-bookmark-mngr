@@ -4,7 +4,13 @@ This project is a simple GitHub Repository bookmark manager created with react.j
 
 ## Available Scripts
 
-In the project directory, you can run:
+You must have npm installed on your computer. From the root project directory run these commands from the command line:
+
+### `npm install`
+
+This will install all dependencies.
+
+To build the project, first run this command:
 
 ### `npm start`
 
